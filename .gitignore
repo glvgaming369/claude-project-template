@@ -1,0 +1,31 @@
+# Claude Code local overrides (never commit — machine/user specific)
+CLAUDE.local.md
+settings.local.json
+.claude/settings.local.json
+
+# Dependencies
+node_modules/
+vendor/
+.venv/
+__pycache__/
+
+# Build output
+dist/
+build/
+out/
+*.pyc
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*

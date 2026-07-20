@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Custom status line. Claude Code invokes this with session info as JSON on stdin
+# and prints stdout as the status line. Wired via settings.json -> statusLine.command.
+input=$(cat)
+
+model=$(printf '%s' "$input" | node -e "
+  let d='';process.stdin.on('data',c=>d+=c);
+  process.stdin.on('end',()=>{
+    try { console.log(JSON.parse(d).model?.display_name || 'claude'); }
+    catch { console.log('claude'); }
+  });
+" 2>/dev/null || echo "claude")
+
+dir=$(basename "$(pwd)")
+branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+
+if [ -n "$branch" ]; then
+  echo "[$model] $dir ($branch)"
+else
+  echo "[$model] $dir"
+fi
